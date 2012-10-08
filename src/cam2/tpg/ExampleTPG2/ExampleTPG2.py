@@ -6,13 +6,11 @@ Created on 02/10/2012
 from cam2.TPG import TPG
 from cam2.UnimplementedTPError import UnimplementedTPError
 
-__all__=['ExampleTPG']
+__all__=['ExampleTPG2']
 
-class ExampleTPG(TPG):
+class ExampleTPG2(TPG):
     '''This is an example TPG that demonstrates how to create a TPG for the 
-    CAM2 module.  The first way to create a TPG Module is to simply put all
-    code within a python module with the same name as the TPGModule.  In this
-    case 'ExampleTPG' class in 'ExampleTPG.py' '''
+    CAM2 module'''
     
     '''
     Each settings is made up of a 6-tuple (<name>, <label>, <type>, 

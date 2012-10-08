@@ -32,27 +32,28 @@ class TPGFactory(object):
             self._scanDirs(reload)
         if name in self._tpgs:
             tpg = self._tpgs[name]
+            # instanciate the singleton if required
             if not tpg[1]:
                 tpg[1] = tpg[0]()
             return tpg[1]
             
-        
     def _scanDirs(self, reload = False):
         '''Scans the entire searchpath for TPGs'''
         for path in self._searchpath:
             self._scanDir(path, reload)
         
     def _scanDir(self, path, reload = False):
-        '''Scans a directory for TPGs'''
+        '''Scans <path> package for TPGs'''
         package = __import__(path, globals(), locals(), [], -1)
-#        print dir(package.tpg)
+        # loop through all modules (or special packages @see examples in tpg folder)
         for modname in dir(package.tpg):
             mod = getattr(package.tpg, modname)
             if type(mod) == types.ModuleType:
+                # loop through all the definitions in the module
                 for classname in dir(mod):
                     cls = getattr(mod, classname)
+                    # filter out only Classes that extend the TPG superclass
                     if inspect.isclass(cls) and issubclass(cls, TPG) and cls != TPG:
                         if reload or classname not in self._tpgs:
                             self._tpgs[classname] = [cls, None]
-#                        print "from tpg.%s import %s" %(modname, classname)
-                
+## End TPGFactory ##
